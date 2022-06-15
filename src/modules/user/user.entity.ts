@@ -1,4 +1,5 @@
 import {
+  BeforeCreate,
   Column,
   DataType,
   HasMany,
@@ -9,6 +10,8 @@ import {
 import { CategoryEntity } from "../category/category.entity";
 import { PostEntity } from "../post/post.entity";
 import { PageEntity } from "../page/page.entity";
+import { Exclude } from "class-transformer";
+import * as bcrypt from "bcrypt";
 
 @Table({
   timestamps: true,
@@ -41,6 +44,10 @@ export class UserEntity extends Model<UserEntity> {
   })
   password: string;
 
+  @Column({ allowNull: true })
+  @Exclude()
+  refresh_token?: string;
+
   @HasMany(() => CategoryEntity, {})
   categories: CategoryEntity[];
   //
@@ -63,4 +70,15 @@ export class UserEntity extends Model<UserEntity> {
     defaultValue: Sequelize.fn("now"),
   })
   updatedAt: Date;
+
+  @BeforeCreate
+  static async setPassword(instance: UserEntity) {
+    if (instance.password) {
+      instance.password = await bcrypt.hash(
+        instance.password + process.env.PASS_SALT,
+        10,
+      );
+      return instance;
+    }
+  }
 }

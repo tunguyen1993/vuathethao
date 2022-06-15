@@ -9,9 +9,12 @@ import { UserModule } from "./modules/user/user.module";
 import { PostModule } from "./modules/post/post.module";
 import { PageTypeModule } from "./modules/page-type/page-type.module";
 import { ConfigModule as configAppModule } from "./modules/config/config.module";
+import { AuthModule } from "./modules/auth/auth.module";
+import { CategoryItemModule } from "./modules/category-item/category-item.module";
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    AuthModule,
     DatabaseModule,
     UserModule,
     PageModule,
@@ -19,6 +22,7 @@ import { ConfigModule as configAppModule } from "./modules/config/config.module"
     PostModule,
     PageTypeModule,
     configAppModule,
+    CategoryItemModule,
   ],
   controllers: [AppController],
   providers: [AppService],

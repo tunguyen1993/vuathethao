@@ -7,37 +7,58 @@ export class PageTypeController {
   constructor(private readonly _pageTypeService: PageTypeService) {}
 
   @Get("home-page")
-  getHomePage(@Req() request: Request, @Param() param) {
-    return this._pageTypeService.getListById(1);
+  async getHomePage(@Req() request: Request, @Param() param) {
+    return {
+      code: 200,
+      data: await this._pageTypeService.getListById(1),
+    };
   }
 
   @Get("e-sport")
-  getESport(@Req() request: Request, @Param() param) {
-    return this._pageTypeService.getListById(2);
+  async getESport(@Req() request: Request, @Param() param) {
+    return {
+      code: 200,
+      data: await this._pageTypeService.getListById(2),
+    };
   }
 
   @Get("game-card")
-  getGameCard(@Req() request: Request, @Param() param) {
-    return this._pageTypeService.getListById(3);
+  async getGameCard(@Req() request: Request, @Param() param) {
+    return {
+      code: 200,
+      data: await this._pageTypeService.getListById(3),
+    };
   }
 
   @Get("discount")
-  getUuDai(@Req() request: Request, @Param() param) {
-    return this._pageTypeService.getListById(4);
+  async getUuDai(@Req() request: Request, @Param() param) {
+    return {
+      code: 200,
+      data: await this._pageTypeService.getListById(4),
+    };
   }
 
   @Get("videos")
-  getVideos(@Req() request: Request, @Param() param) {
-    return this._pageTypeService.getListById(5);
+  async getVideos(@Req() request: Request, @Param() param) {
+    return {
+      code: 200,
+      data: await this._pageTypeService.getListById(5),
+    };
   }
 
   @Get("agency")
-  getAgency(@Req() request: Request, @Param() param) {
-    return this._pageTypeService.getListById(6);
+  async getAgency(@Req() request: Request, @Param() param) {
+    return {
+      code: 200,
+      data: await this._pageTypeService.getListById(6),
+    };
   }
 
   @Get("subscribe")
-  subscribe(@Req() request: Request, @Param() param) {
-    return this._pageTypeService.getListById(7);
+  async subscribe(@Req() request: Request, @Param() param) {
+    return {
+      code: 200,
+      data: await this._pageTypeService.getListById(7),
+    };
   }
 }

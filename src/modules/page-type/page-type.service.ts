@@ -33,7 +33,13 @@ export class PageTypeService {
           include: [
             {
               model: CategoryItemEntity,
-              include: [PostEntity],
+              include: [
+                {
+                  model: PostEntity,
+                  limit: 10,
+                  separate: false,
+                },
+              ],
             },
           ],
         },
