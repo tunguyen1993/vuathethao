@@ -12,4 +12,18 @@ export class ConfigService {
   async getConfig() {
     return await this.configRepository.findAll({});
   }
+
+  async updateConfig(id: number, data: any) {
+    let test = await this.configRepository.update(data, {
+      where: {
+        id,
+      },
+    });
+
+    return await this.configRepository.findOne({
+      where: {
+        id,
+      },
+    });
+  }
 }
