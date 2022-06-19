@@ -5,6 +5,7 @@ import { PageItemEntity } from "../page-item/page-item.entity";
 import { PostEntity } from "../post/post.entity";
 import { CategoryEntity } from "../category/category.entity";
 import { CategoryItemEntity } from "../category-item/category-item.entity";
+import { UserEntity } from "../user/user.entity";
 
 @Injectable()
 export class PageTypeService {
@@ -25,6 +26,22 @@ export class PageTypeService {
           include: [
             {
               model: PostEntity,
+              include: [
+                {
+                  model: CategoryItemEntity,
+                  attributes: ["category_id"],
+                  include: [
+                    {
+                      model: CategoryEntity,
+                      attributes: ["name"],
+                    },
+                  ],
+                },
+                {
+                  model: UserEntity,
+                  attributes: ["full_name", "email"],
+                },
+              ],
             },
           ],
         },
