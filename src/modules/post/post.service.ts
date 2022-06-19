@@ -78,4 +78,12 @@ export class PostService extends baseService {
       },
     });
   }
+
+  async getById(id: number) {
+    return await this.postRepository.findOne({
+      where: {
+        id,
+      },
+    });
+  }
 }
