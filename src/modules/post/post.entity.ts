@@ -11,6 +11,7 @@ import {
 import { PageItemEntity } from "../page-item/page-item.entity";
 import { CategoryItemEntity } from "../category-item/category-item.entity";
 import { UserEntity } from "../user/user.entity";
+import { NotifyEntity } from "../notify/notify.entity";
 
 @Table({
   timestamps: true,
@@ -103,6 +104,12 @@ export class PostEntity extends Model<PostEntity> {
   @ForeignKey(() => UserEntity)
   @Column
   user_id: number;
+
+  @HasOne(() => NotifyEntity, {
+    onDelete: "CASCADE",
+    hooks: true,
+  })
+  notify: NotifyEntity;
 
   @HasOne(() => PageItemEntity, {
     onDelete: "CASCADE",

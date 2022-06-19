@@ -21,6 +21,7 @@ import { LoggingInterceptor } from "@algoan/nestjs-logging-interceptor";
 import { join } from "path";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import { MulterModule } from "@nestjs/platform-express";
+import { NotifyModule } from "./modules/notify/notify.module";
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -35,6 +36,7 @@ import { MulterModule } from "@nestjs/platform-express";
     CategoryItemModule,
     PageItemModule,
     UploadFileModule,
+    NotifyModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, "..", "assets"),
     }),

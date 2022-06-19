@@ -9,6 +9,7 @@ import { PageItemEntity } from "../../modules/page-item/page-item.entity";
 import { CategoryItemEntity } from "../../modules/category-item/category-item.entity";
 import { UserEntity } from "../../modules/user/user.entity";
 import { ConfigEntity } from "../../modules/config/config.entity";
+import { NotifyEntity } from "../../modules/notify/notify.entity";
 
 export const databaseProviders = [
   {
@@ -32,6 +33,7 @@ export const databaseProviders = [
       const sequelize = new Sequelize(config);
       sequelize.addModels([
         UserEntity,
+        NotifyEntity,
         PostEntity,
         PageEntity,
         CategoryEntity,

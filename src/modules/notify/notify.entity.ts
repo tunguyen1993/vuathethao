@@ -9,13 +9,14 @@ import {
   Sequelize,
   Table,
 } from "sequelize-typescript";
+import { PostEntity } from "../post/post.entity";
 import { UserEntity } from "../user/user.entity";
 
 @Table({
   timestamps: true,
-  tableName: "config",
+  tableName: "notifications",
 })
-export class ConfigEntity extends Model<ConfigEntity> {
+export class NotifyEntity extends Model<NotifyEntity> {
   @Column({
     allowNull: false,
     autoIncrement: true,
@@ -28,19 +29,34 @@ export class ConfigEntity extends Model<ConfigEntity> {
     allowNull: true,
     type: DataType.STRING(255),
   })
-  type: string;
-
-  @Column({
-    allowNull: true,
-    type: DataType.STRING(255),
-  })
-  link: string;
+  title: string;
 
   @Column({
     allowNull: true,
     type: DataType.STRING(255),
   })
   content: string;
+
+  @ForeignKey(() => PostEntity)
+  @Column
+  post_id: number;
+
+  @BelongsTo(() => PostEntity)
+  post: PostEntity;
+
+  @ForeignKey(() => UserEntity)
+  @Column
+  user_id: number;
+
+  @BelongsTo(() => UserEntity)
+  user_created: UserEntity;
+
+  @Column({
+    allowNull: false,
+    type: DataType.BOOLEAN,
+    defaultValue: false,
+  })
+  read: boolean;
 
   @Column({
     type: DataType.DATE,

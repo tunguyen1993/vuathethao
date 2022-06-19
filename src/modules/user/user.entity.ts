@@ -12,6 +12,7 @@ import { PostEntity } from "../post/post.entity";
 import { PageEntity } from "../page/page.entity";
 import { Exclude } from "class-transformer";
 import * as bcrypt from "bcrypt";
+import { NotifyEntity } from "../notify/notify.entity";
 
 @Table({
   timestamps: true,
@@ -56,6 +57,9 @@ export class UserEntity extends Model<UserEntity> {
 
   @HasMany(() => PageEntity, {})
   pages: PageEntity[];
+
+  @HasMany(() => PageEntity, {})
+  notify: NotifyEntity[];
 
   @Column({
     type: DataType.DATE,
