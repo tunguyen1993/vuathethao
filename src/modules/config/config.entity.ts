@@ -13,7 +13,6 @@ import {
 @Table({
   timestamps: true,
   tableName: "config",
-  deletedAt: true,
 })
 export class ConfigEntity extends Model<ConfigEntity> {
   @Column({

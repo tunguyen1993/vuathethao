@@ -10,8 +10,11 @@ export class PageService {
     @Inject(PAGE_REPOSITORY) private readonly pageRepository: typeof PageEntity,
   ) {}
 
-  async getDataBlockFrontPage() {
+  async getDataBlock(id: number) {
     return await this.pageRepository.findOne({
+      where: {
+        id,
+      },
       include: [PageTypeEntity],
     });
   }

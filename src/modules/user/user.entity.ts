@@ -50,10 +50,10 @@ export class UserEntity extends Model<UserEntity> {
 
   @HasMany(() => CategoryEntity, {})
   categories: CategoryEntity[];
-  //
+
   @HasMany(() => PostEntity, {})
   posts: PostEntity[];
-  //
+
   @HasMany(() => PageEntity, {})
   pages: PageEntity[];
 

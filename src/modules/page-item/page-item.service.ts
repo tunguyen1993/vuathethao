@@ -9,5 +9,14 @@ export class PageItemService {
     private readonly pageItemRepository: typeof PageItemEntity,
   ) {}
 
-  async createData() {}
+  async createData(page_id, page_type_id, data) {
+    await this.pageItemRepository.destroy({
+      where: {
+        page_id,
+        page_type_id,
+      },
+    });
+    console.log(data);
+    return this.pageItemRepository.bulkCreate(data);
+  }
 }

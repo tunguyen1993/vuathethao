@@ -41,7 +41,17 @@ export class PostEntity extends Model<PostEntity> {
     allowNull: true,
     type: DataType.STRING(500),
   })
-  image: string;
+  get image(): string {
+    function ValidURL(str) {
+      const regex =
+        /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+      return regex.test(str);
+    }
+    if (this.getDataValue("image") && ValidURL(this.getDataValue("image"))) {
+      return this.getDataValue("image");
+    }
+    return process.env.BASE_URL + "/images/" + this.getDataValue("image");
+  }
 
   @Column({
     allowNull: true,
@@ -56,7 +66,7 @@ export class PostEntity extends Model<PostEntity> {
   content: string;
 
   @Column({
-    allowNull: true,
+    allowNull: false,
     type: DataType.ENUM(
       "DEFAULT",
       "VIDEO",
@@ -77,7 +87,7 @@ export class PostEntity extends Model<PostEntity> {
   promotion: number;
 
   @Column({
-    allowNull: false,
+    allowNull: true,
     type: DataType.INTEGER,
     defaultValue: 0,
   })

@@ -1,11 +1,13 @@
 import {
   AllowNull,
+  AutoIncrement,
   BelongsTo,
   Column,
   DataType,
   ForeignKey,
   HasMany,
   Model,
+  PrimaryKey,
   Sequelize,
   Table,
 } from "sequelize-typescript";
@@ -40,11 +42,25 @@ export class PageTypeEntity extends Model<PageTypeEntity> {
   order: number;
 
   @Column({
+    allowNull: true,
+    type: DataType.INTEGER,
+    defaultValue: 0,
+  })
+  max_fields: number;
+
+  @Column({
     allowNull: false,
     type: DataType.ENUM("POST", "CATEGORY", "ADS"),
     defaultValue: "POST",
   })
   type: string;
+
+  @Column({
+    allowNull: false,
+    type: DataType.ENUM("POST", "ADS", "GAME"),
+    defaultValue: "POST",
+  })
+  FrontEndType: string;
 
   @BelongsTo(() => CategoryEntity)
   category!: CategoryEntity;

@@ -35,4 +35,14 @@ export class CategoryItemService extends baseService {
       transform,
     );
   }
+
+  async getDataByCategoryNoPagination(category_id, limit, page) {
+    return this.categoryItemRepository.findAll({
+      where: {
+        category_id,
+      },
+      include: [PostEntity],
+      subQuery: false,
+    });
+  }
 }

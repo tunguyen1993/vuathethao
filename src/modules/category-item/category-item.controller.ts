@@ -16,4 +16,16 @@ export class CategoryItemController {
       ),
     };
   }
+
+  @Get(":category_id")
+  async getListNoPagination(@Query() query, @Param("category_id") category_id) {
+    return {
+      code: 200,
+      data: await this._categoryService.getDataByCategoryNoPagination(
+        category_id,
+        query.limit,
+        query.page,
+      ),
+    };
+  }
 }

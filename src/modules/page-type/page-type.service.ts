@@ -10,11 +10,11 @@ import { CategoryItemEntity } from "../category-item/category-item.entity";
 export class PageTypeService {
   constructor(
     @Inject(PAGE_TYPE_REPOSITORY)
-    private readonly pageItemRepository: typeof PageTypeEntity,
+    private readonly pageTypeRepository: typeof PageTypeEntity,
   ) {}
 
   async getListById(page_id: number) {
-    return await this.pageItemRepository.findAll({
+    return await this.pageTypeRepository.findAll({
       where: {
         page_id,
       },
@@ -28,22 +28,39 @@ export class PageTypeService {
             },
           ],
         },
+      ],
+    });
+  }
+
+  async getListByTypeId(id: number) {
+    return await this.pageTypeRepository.findOne({
+      where: {
+        id,
+      },
+      order: [["order", "ASC"]],
+      include: [
         {
-          model: CategoryEntity,
+          model: PageItemEntity,
           include: [
             {
-              model: CategoryItemEntity,
-              include: [
-                {
-                  model: PostEntity,
-                  limit: 10,
-                  separate: false,
-                },
-              ],
+              model: PostEntity,
             },
           ],
         },
       ],
     });
+  }
+
+  async updateCategoryId(id: number, category_id: number) {
+    return await this.pageTypeRepository.update(
+      {
+        category_id,
+      },
+      {
+        where: {
+          id,
+        },
+      },
+    );
   }
 }

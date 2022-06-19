@@ -41,6 +41,7 @@ export const databaseProviders = [
         ConfigEntity,
       ]);
       await sequelize.sync();
+
       return sequelize;
     },
   },
