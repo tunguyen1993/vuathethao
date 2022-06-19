@@ -84,6 +84,22 @@ export class PostService extends baseService {
       where: {
         id,
       },
+      include: [
+        {
+          model: CategoryItemEntity,
+          attributes: ["category_id"],
+          include: [
+            {
+              model: CategoryEntity,
+              attributes: ["name"],
+            },
+          ],
+        },
+        {
+          model: UserEntity,
+          attributes: ["full_name", "email"],
+        },
+      ],
     });
   }
 }

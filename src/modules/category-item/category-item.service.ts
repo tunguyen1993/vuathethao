@@ -3,6 +3,8 @@ import { CATEGORY_ITEM_REPOSITORY } from "../../core/constants";
 import { baseService } from "../../core/service/base.service";
 import { CategoryItemEntity } from "./category-item.entity";
 import { PostEntity } from "../post/post.entity";
+import { CategoryEntity } from "../category/category.entity";
+import { UserEntity } from "../user/user.entity";
 
 @Injectable()
 export class CategoryItemService extends baseService {
@@ -28,7 +30,27 @@ export class CategoryItemService extends baseService {
         where: {
           category_id,
         },
-        include: [PostEntity],
+        include: [
+          {
+            model: PostEntity,
+            include: [
+              {
+                model: CategoryItemEntity,
+                attributes: ["category_id"],
+                include: [
+                  {
+                    model: CategoryEntity,
+                    attributes: ["name"],
+                  },
+                ],
+              },
+              {
+                model: UserEntity,
+                attributes: ["full_name", "email"],
+              },
+            ],
+          },
+        ],
         subQuery: false,
       },
       [],
