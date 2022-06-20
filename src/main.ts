@@ -8,6 +8,7 @@ async function bootstrap() {
     "http://localhost:4200",
     "http://43.200.20.68",
     "http://localhost:3000",
+    "https://thethaovua.org",
   ];
   app.enableCors({
     origin: function (origin, callback) {
