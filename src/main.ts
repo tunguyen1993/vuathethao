@@ -4,7 +4,11 @@ import { ValidateInputPipe } from "./core/pipes/validate.pipe";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  let whitelist = ["http://localhost:4200", "http://43.200.20.68"];
+  let whitelist = [
+    "http://localhost:4200",
+    "http://43.200.20.68",
+    "http://localhost:3000",
+  ];
   app.enableCors({
     origin: function (origin, callback) {
       if (whitelist.indexOf(origin) !== -1 || !origin) {

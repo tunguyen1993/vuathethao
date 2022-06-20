@@ -3,8 +3,11 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Post,
+  Put,
   Query,
   Req,
   UseGuards,
@@ -98,6 +101,18 @@ export class AdminPostController {
     return {
       code: 200,
       data: await this._postService.deletePost(id),
+    };
+  }
+
+  @Put(":id")
+  async updatePost(@Param("id") id: number, @Body() body: any) {
+    let post = await this._postService.getById(id);
+    if (!post) {
+      throw new HttpException("Post Found", HttpStatus.NOT_FOUND);
+    }
+    return {
+      code: 200,
+      data: await this._postService.updatePost(id, body),
     };
   }
 }

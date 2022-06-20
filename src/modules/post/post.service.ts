@@ -25,6 +25,22 @@ export class PostService extends baseService {
       where: {
         type,
       },
+      include: [
+        {
+          model: CategoryItemEntity,
+          attributes: ["category_id"],
+          include: [
+            {
+              model: CategoryEntity,
+              attributes: ["name"],
+            },
+          ],
+        },
+        {
+          model: UserEntity,
+          attributes: ["full_name", "email"],
+        },
+      ],
     });
   }
 
@@ -42,13 +58,22 @@ export class PostService extends baseService {
         include: [
           {
             model: CategoryItemEntity,
-            include: [CategoryEntity],
+            attributes: ["category_id"],
+            include: [
+              {
+                model: CategoryEntity,
+                attributes: ["name"],
+              },
+            ],
           },
-          UserEntity,
+          {
+            model: UserEntity,
+            attributes: ["full_name", "email"],
+          },
         ],
         subQuery: false,
       },
-      [],
+      [["id", "DESC"]],
       transform,
     );
   }
@@ -100,6 +125,14 @@ export class PostService extends baseService {
           attributes: ["full_name", "email"],
         },
       ],
+    });
+  }
+
+  async updatePost(id: number, data_update: any) {
+    return await this.postRepository.update(data_update, {
+      where: {
+        id,
+      },
     });
   }
 }

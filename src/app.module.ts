@@ -37,14 +37,16 @@ import { NotifyModule } from "./modules/notify/notify.module";
     PageItemModule,
     UploadFileModule,
     NotifyModule,
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, "..", "assets"),
-    }),
-    MulterModule.registerAsync({
-      useFactory: () => ({
-        dest: "./assets/videos",
-      }),
-    }),
+    ServeStaticModule.forRoot(
+      {
+        serveRoot: "/files",
+        rootPath: join(__dirname, "..", "assets"),
+      },
+      {
+        serveRoot: "",
+        rootPath: join(__dirname, "..", "frontend"),
+      },
+    ),
   ],
   controllers: [AppController],
   providers: [

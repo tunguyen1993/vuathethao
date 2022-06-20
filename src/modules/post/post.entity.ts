@@ -51,7 +51,7 @@ export class PostEntity extends Model<PostEntity> {
     if (this.getDataValue("image") && ValidURL(this.getDataValue("image"))) {
       return this.getDataValue("image");
     }
-    return process.env.BASE_URL + "/images/" + this.getDataValue("image");
+    return process.env.BASE_URL + "/files/images/" + this.getDataValue("image");
   }
 
   @Column({
@@ -76,6 +76,8 @@ export class PostEntity extends Model<PostEntity> {
       "SUBSCRIBE",
       "ADS",
       "AGENCY",
+      "DEALS",
+      "LIVESTREAM",
     ),
     defaultValue: "DEFAULT",
   })
