@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module, RequestMethod } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { DatabaseModule } from "./core/database/database.module";
@@ -22,6 +22,7 @@ import { join } from "path";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import { MulterModule } from "@nestjs/platform-express";
 import { NotifyModule } from "./modules/notify/notify.module";
+import { FrontendMiddleware } from "./core/middleware/frontend.middleware";
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -62,4 +63,11 @@ import { NotifyModule } from "./modules/notify/notify.module";
     },
   ],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(FrontendMiddleware).forRoutes({
+      path: "/**", // For all routes
+      method: RequestMethod.ALL, // For all methods
+    });
+  }
+}
