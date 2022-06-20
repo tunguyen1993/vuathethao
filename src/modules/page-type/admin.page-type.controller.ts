@@ -1,7 +1,17 @@
-import { Body, Controller, Get, Param, Put, Req } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Put,
+  Req,
+  UseGuards,
+} from "@nestjs/common";
 import { Request } from "express";
 import { PageTypeService } from "./page-type.service";
+import { JwtAuthGuard } from "../../core/guards/jwtAuth.guard";
 
+@UseGuards(JwtAuthGuard)
 @Controller("api/v1/admin/page-type")
 export class AdminPageTypeController {
   constructor(private readonly _pageTypeService: PageTypeService) {}

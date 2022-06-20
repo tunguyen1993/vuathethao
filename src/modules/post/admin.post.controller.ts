@@ -17,6 +17,7 @@ import { JwtAuthGuard } from "../../core/guards/jwtAuth.guard";
 import { Request, Response } from "express";
 
 @UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard)
 @Controller("api/v1/admin/post")
 export class AdminPostController {
   constructor(private _postService: PostService) {}

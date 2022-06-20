@@ -2,13 +2,18 @@ import { HttpException, Inject, Injectable } from "@nestjs/common";
 import { USER_REPOSITORY } from "../../core/constants";
 import { UserEntity } from "./user.entity";
 import { catchError } from "rxjs";
+import { baseService } from "../../core/service/base.service";
+import { CategoryItemEntity } from "../category-item/category-item.entity";
+import { CategoryEntity } from "../category/category.entity";
 
 @Injectable()
-export class UserService {
+export class UserService extends baseService {
   constructor(
     @Inject(USER_REPOSITORY)
     private readonly userRepository: typeof UserEntity,
-  ) {}
+  ) {
+    super(userRepository);
+  }
 
   async findOneById(id: number): Promise<UserEntity> {
     return await this.userRepository.findOne({
@@ -44,5 +49,21 @@ export class UserService {
         email,
       },
     });
+  }
+
+  async getListUser(page: number, limit: number) {
+    let transform = (records) => {
+      return records.map((record) => {
+        return record;
+      });
+    };
+    return this.paginationScroll(
+      this.userRepository,
+      page,
+      limit,
+      {},
+      [["id", "DESC"]],
+      transform,
+    );
   }
 }
