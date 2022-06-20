@@ -1,4 +1,9 @@
-import { MiddlewareConsumer, Module, RequestMethod } from "@nestjs/common";
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { DatabaseModule } from "./core/database/database.module";
@@ -63,11 +68,11 @@ import { FrontendMiddleware } from "./core/middleware/frontend.middleware";
     },
   ],
 })
-export class AppModule {
-  configure(consumer: MiddlewareConsumer): void {
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
     consumer.apply(FrontendMiddleware).forRoutes({
-      path: "/**", // For all routes
-      method: RequestMethod.ALL, // For all methods
+      path: "/**",
+      method: RequestMethod.ALL,
     });
   }
 }

@@ -22,12 +22,11 @@ import { Request, Response } from "express";
 export class FrontendMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: Function) {
     const { url } = req;
-
     if (url.indexOf(ROUTE_PREFIX) === 1) {
       // it starts with /api --> continue with execution
       next();
     } else if (allowedExt.filter((ext) => url.indexOf(ext) > 0).length > 0) {
-      // it has a file extension --> resolve the filea
+      // it has a file extension --> resolve the file
       console.log("here be the other files: " + resolvePath(url));
       res.sendFile(resolvePath(url));
     } else {
