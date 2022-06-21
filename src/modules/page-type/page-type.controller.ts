@@ -69,4 +69,12 @@ export class PageTypeController {
       data: await this._pageTypeService.getListById(8),
     };
   }
+
+  @Get("livestream")
+  async livestream(@Req() request: Request, @Param() param) {
+    return {
+      code: 200,
+      data: await this._pageTypeService.getListById(9),
+    };
+  }
 }
