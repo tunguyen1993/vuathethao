@@ -66,7 +66,7 @@ export class PageTypeController {
   async sport(@Req() request: Request, @Param() param) {
     return {
       code: 200,
-      data: await this._pageTypeService.getListById(7),
+      data: await this._pageTypeService.getListById(8),
     };
   }
 }
