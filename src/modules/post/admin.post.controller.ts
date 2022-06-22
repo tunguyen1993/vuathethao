@@ -30,11 +30,64 @@ export class AdminPostController {
     };
   }
 
-  @Get("lists")
+  @Get("posts")
   async getListPosts(@Query() query) {
     return {
       code: 200,
-      data: await this._postService.getListPost(query.page, query.limit),
+      data: await this._postService.getListPost(
+        query.page,
+        query.limit,
+        [13, 1, 8, 4],
+        query,
+      ),
+    };
+  }
+
+  @Get("deals")
+  async getListDeals(@Query() query) {
+    return {
+      code: 200,
+      data: await this._postService.getListPost(query.page, query.limit, [3]),
+    };
+  }
+
+  @Get("game-card")
+  async getListGameCard(@Query() query) {
+    return {
+      code: 200,
+      data: await this._postService.getListPost(query.page, query.limit, [2]),
+    };
+  }
+
+  @Get("advertisements")
+  async getListAdvertisements(@Query() query) {
+    return {
+      code: 200,
+      data: await this._postService.getListPost(query.page, query.limit, [2]),
+    };
+  }
+
+  @Get("game-mobile")
+  async getGameMobile(@Query() query) {
+    return {
+      code: 200,
+      data: await this._postService.getListPost(query.page, query.limit, [6]),
+    };
+  }
+
+  @Get("agency")
+  async getAgency(@Query() query) {
+    return {
+      code: 200,
+      data: await this._postService.getListPost(query.page, query.limit, [5]),
+    };
+  }
+
+  @Get("notify")
+  async getNotify(@Query() query) {
+    return {
+      code: 200,
+      data: await this._postService.getListPost(query.page, query.limit, [14]),
     };
   }
 

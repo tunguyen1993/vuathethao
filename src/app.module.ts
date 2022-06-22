@@ -28,6 +28,7 @@ import { ServeStaticModule } from "@nestjs/serve-static";
 import { MulterModule } from "@nestjs/platform-express";
 import { NotifyModule } from "./modules/notify/notify.module";
 import { FrontendMiddleware } from "./core/middleware/frontend.middleware";
+import { FirebaseService } from "./core/firebase/firebase.service";
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -58,6 +59,7 @@ import { FrontendMiddleware } from "./core/middleware/frontend.middleware";
   providers: [
     AppService,
     JwtStrategy,
+    FirebaseService,
     {
       provide: APP_INTERCEPTOR,
       useClass: HttpInterceptor,

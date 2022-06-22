@@ -24,6 +24,7 @@ export class AuthService {
     let user_data_format = {
       id: user.id,
       full_name: user.full_name,
+      role: user.role,
     };
     const token = await this.generateToken(user_data_format);
     const refresh_token = this.jwtService.sign(

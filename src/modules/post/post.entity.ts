@@ -1,4 +1,5 @@
 import {
+  AfterCreate,
   BelongsTo,
   Column,
   DataType,
@@ -12,6 +13,7 @@ import { PageItemEntity } from "../page-item/page-item.entity";
 import { CategoryItemEntity } from "../category-item/category-item.entity";
 import { UserEntity } from "../user/user.entity";
 import { NotifyEntity } from "../notify/notify.entity";
+import { FirebaseService } from "../../core/firebase/firebase.service";
 
 @Table({
   timestamps: true,
@@ -48,6 +50,7 @@ export class PostEntity extends Model<PostEntity> {
         /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
       return regex.test(str);
     }
+
     if (this.getDataValue("image") && ValidURL(this.getDataValue("image"))) {
       return this.getDataValue("image");
     }
@@ -62,7 +65,7 @@ export class PostEntity extends Model<PostEntity> {
 
   @Column({
     allowNull: true,
-    type: DataType.STRING,
+    type: DataType.TEXT,
   })
   content: string;
 
@@ -78,10 +81,18 @@ export class PostEntity extends Model<PostEntity> {
       "AGENCY",
       "DEALS",
       "LIVESTREAM",
+      "NOTIFY",
     ),
     defaultValue: "DEFAULT",
   })
   type: string;
+
+  @Column({
+    allowNull: false,
+    type: DataType.ENUM("ENABLE", "DISABLE"),
+    defaultValue: "ENABLE",
+  })
+  status: string;
 
   @Column({
     allowNull: true,
@@ -141,4 +152,15 @@ export class PostEntity extends Model<PostEntity> {
     defaultValue: Sequelize.fn("now"),
   })
   updatedAt: Date;
+
+  @AfterCreate
+  static async pushNotify(instances, options) {
+    let noti = new FirebaseService();
+    if (instances.type === "NOTIFY") {
+      noti.pushTopicNotify("notifyApp", {
+        title: "Có 1 tin nhắn mới ",
+        body: "CALL API DATA",
+      });
+    }
+  }
 }

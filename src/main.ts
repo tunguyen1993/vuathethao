@@ -1,6 +1,21 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { ValidateInputPipe } from "./core/pipes/validate.pipe";
+import * as admin from "firebase-admin";
+import * as serviceAccount from "./core/firebase/firebaseServiceAccount.json";
+
+const firebase_params = {
+  type: serviceAccount.type,
+  projectId: serviceAccount.project_id,
+  privateKeyId: serviceAccount.private_key_id,
+  privateKey: serviceAccount.private_key,
+  clientEmail: serviceAccount.client_email,
+  clientId: serviceAccount.client_id,
+  authUri: serviceAccount.auth_uri,
+  tokenUri: serviceAccount.token_uri,
+  authProviderX509CertUrl: serviceAccount.auth_provider_x509_cert_url,
+  clientC509CertUrl: serviceAccount.client_x509_cert_url,
+};
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,6 +25,10 @@ async function bootstrap() {
   //   "http://localhost:3000",
   //   "https://thethaovua.org",
   // ];
+
+  admin.initializeApp({
+    credential: admin.credential.cert(firebase_params),
+  });
 
   app.enableCors();
 

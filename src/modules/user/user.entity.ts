@@ -45,6 +45,13 @@ export class UserEntity extends Model<UserEntity> {
   })
   password: string;
 
+  @Column({
+    allowNull: true,
+    type: DataType.ENUM("USER", "ADMIN"),
+    defaultValue: "USER",
+  })
+  role: string;
+
   @Column({ allowNull: true })
   @Exclude()
   refresh_token?: string;
