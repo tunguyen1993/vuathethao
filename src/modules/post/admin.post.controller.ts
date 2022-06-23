@@ -34,7 +34,13 @@ export class AdminPostController {
   async getListAdvertisements(@Query() query) {
     return {
       code: 200,
-      data: await this._postService.getListPost(query.page, query.limit, [15]),
+      data: await this._postService.getListPost(
+        query.page,
+        query.limit,
+        [15],
+        undefined,
+        [query.sort_by, query.order_by],
+      ),
     };
   }
 
@@ -47,6 +53,7 @@ export class AdminPostController {
         query.limit,
         [13, 1, 8, 4],
         query,
+        [query.sort_by, query.order_by],
       ),
     };
   }
@@ -55,7 +62,13 @@ export class AdminPostController {
   async getListDeals(@Query() query) {
     return {
       code: 200,
-      data: await this._postService.getListPost(query.page, query.limit, [3]),
+      data: await this._postService.getListPost(
+        query.page,
+        query.limit,
+        [3],
+        undefined,
+        [query.sort_by, query.order_by],
+      ),
     };
   }
 
@@ -63,7 +76,13 @@ export class AdminPostController {
   async getListGameCard(@Query() query) {
     return {
       code: 200,
-      data: await this._postService.getListPost(query.page, query.limit, [2]),
+      data: await this._postService.getListPost(
+        query.page,
+        query.limit,
+        [2],
+        undefined,
+        [query.sort_by, query.order_by],
+      ),
     };
   }
 
@@ -71,7 +90,13 @@ export class AdminPostController {
   async getGameMobile(@Query() query) {
     return {
       code: 200,
-      data: await this._postService.getListPost(query.page, query.limit, [6]),
+      data: await this._postService.getListPost(
+        query.page,
+        query.limit,
+        [6],
+        undefined,
+        [query.sort_by, query.order_by],
+      ),
     };
   }
 
@@ -79,7 +104,13 @@ export class AdminPostController {
   async getAgency(@Query() query) {
     return {
       code: 200,
-      data: await this._postService.getListPost(query.page, query.limit, [5]),
+      data: await this._postService.getListPost(
+        query.page,
+        query.limit,
+        [5],
+        undefined,
+        [query.sort_by, query.order_by],
+      ),
     };
   }
 
@@ -87,7 +118,13 @@ export class AdminPostController {
   async getNotify(@Query() query) {
     return {
       code: 200,
-      data: await this._postService.getListPost(query.page, query.limit, [14]),
+      data: await this._postService.getListPost(
+        query.page,
+        query.limit,
+        [14],
+        undefined,
+        [query.sort_by, query.order_by],
+      ),
     };
   }
 
@@ -95,7 +132,13 @@ export class AdminPostController {
   async getSubscribe(@Query() query) {
     return {
       code: 200,
-      data: await this._postService.getListPost(query.page, query.limit, [7]),
+      data: await this._postService.getListPost(
+        query.page,
+        query.limit,
+        [7],
+        undefined,
+        [query.sort_by, query.order_by],
+      ),
     };
   }
 
@@ -103,7 +146,13 @@ export class AdminPostController {
   async livestream(@Query() query) {
     return {
       code: 200,
-      data: await this._postService.getListPost(query.page, query.limit, [9]),
+      data: await this._postService.getListPost(
+        query.page,
+        query.limit,
+        [9],
+        undefined,
+        [query.sort_by, query.order_by],
+      ),
     };
   }
 

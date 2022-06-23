@@ -1,4 +1,11 @@
-import { Controller, Get, HttpException, Param, Req } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  HttpException,
+  Param,
+  Query,
+  Req,
+} from "@nestjs/common";
 import { PostService } from "./post.service";
 
 @Controller("api/v1/post")
@@ -14,6 +21,18 @@ export class PostController {
     return {
       code: 200,
       data,
+    };
+  }
+
+  @Get("get-by-category/:category_id")
+  async getPost(@Param("category_id") category_id: string, @Query() query) {
+    return {
+      code: 200,
+      data: await this._postService.getByCategory(
+        parseInt(category_id),
+        query.page,
+        query.limit,
+      ),
     };
   }
 }

@@ -9,6 +9,8 @@ import { baseService } from "../../core/service/base.service";
 import { CategoryEntity } from "../category/category.entity";
 import { UserEntity } from "../user/user.entity";
 import { Op } from "sequelize";
+import { PageTypeEntity } from "../page-type/page-type.entity";
+import { PageItemEntity } from "../page-item/page-item.entity";
 
 @Injectable()
 export class PostService extends baseService {
@@ -25,7 +27,9 @@ export class PostService extends baseService {
     return this.postRepository.findAll({
       where: {
         type,
+        status: "ENABLE",
       },
+      order: [["id", "DESC"]],
       include: [
         {
           model: CategoryItemEntity,
@@ -50,6 +54,7 @@ export class PostService extends baseService {
     limit,
     categorySelect,
     filter_search: any = undefined,
+    sort,
   ) {
     let transform = (records) => {
       return records.map((record) => {
@@ -88,7 +93,6 @@ export class PostService extends baseService {
           },
         };
       }
-      console.log(filter_search.category);
       if (filter_search.category) {
         query.include[0].where.category_id = filter_search.category;
       }
@@ -98,7 +102,7 @@ export class PostService extends baseService {
       page,
       limit,
       query,
-      [["order", "ASC"]],
+      [sort],
       transform,
     );
   }
@@ -207,5 +211,67 @@ export class PostService extends baseService {
         id,
       },
     });
+  }
+
+  async getByCategory(category_id: number, page, limit) {
+    let page_data = await PageTypeEntity.findOne({
+      where: {
+        type: "CATEGORY",
+        category_id: category_id,
+      },
+      include: [
+        {
+          model: PageItemEntity,
+          attributes: ["id"],
+        },
+      ],
+    });
+    let listId = [];
+    page_data.items.map((item) => {
+      listId.push(item.id);
+    });
+    let orders: any;
+    if (
+      category_id === 1 ||
+      category_id === 4 ||
+      category_id === 8 ||
+      category_id === 15
+    ) {
+      orders = [["id", "DESC"]];
+    } else {
+      orders = [["order", "ASC"]];
+    }
+
+    let search = {
+      order: orders,
+      where: {
+        status: "ENABLE",
+      },
+      include: [
+        {
+          model: CategoryItemEntity,
+          where: {
+            category_id,
+          },
+          required: true,
+        },
+      ],
+      subQuery: false,
+    };
+
+    let transform = (records) => {
+      return records.map((record) => {
+        return record;
+      });
+    };
+
+    return this.paginationScroll(
+      this.postRepository,
+      page,
+      limit,
+      search,
+      [],
+      transform,
+    );
   }
 }

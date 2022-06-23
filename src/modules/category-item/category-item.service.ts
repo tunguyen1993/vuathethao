@@ -123,7 +123,14 @@ export class CategoryItemService extends baseService {
           [Op.not]: listId,
         },
       },
-      include: [PostEntity],
+      include: [
+        {
+          model: PostEntity,
+          where: {
+            status: "ENABLE",
+          },
+        },
+      ],
       subQuery: false,
     });
   }
