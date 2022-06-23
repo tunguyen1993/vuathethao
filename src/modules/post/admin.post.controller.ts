@@ -99,6 +99,14 @@ export class AdminPostController {
     };
   }
 
+  @Get("livestream")
+  async livestream(@Query() query) {
+    return {
+      code: 200,
+      data: await this._postService.getListPost(query.page, query.limit, [9]),
+    };
+  }
+
   @Post("create-post")
   async createPost(@Body() body: any, @Req() request: Request) {
     return {
