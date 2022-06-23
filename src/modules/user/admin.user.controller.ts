@@ -43,7 +43,7 @@ export class AdminUserController {
   ) {
     return {
       code: 200,
-      data: await this._userService.updateUser(request["user"], body),
+      data: await this._userService.updateUserClone(user_id, body),
     };
   }
 

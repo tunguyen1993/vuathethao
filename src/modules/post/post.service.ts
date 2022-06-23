@@ -98,12 +98,23 @@ export class PostService extends baseService {
       page,
       limit,
       query,
-      [["id", "DESC"]],
+      [["order", "ASC"]],
       transform,
     );
   }
 
   async createPost(post_data) {
+    let find_order = await this.postRepository.findOne({
+      where: { type: post_data.type },
+      order: [["order", "DESC"]],
+    });
+
+    if (find_order) {
+      post_data.order = find_order.order + 1;
+    } else {
+      post_data.order = 1;
+    }
+
     let post = await this.postRepository.create(post_data, {
       include: [CategoryItemEntity],
       returning: true,
@@ -162,6 +173,35 @@ export class PostService extends baseService {
   }
 
   async updatePost(id: number, data_update: any) {
+    if (data_update.type) {
+      await this.categoryItemRepository.update(
+        {
+          category_id: data_update.type,
+        },
+        {
+          where: {
+            post_id: id,
+          },
+        },
+      );
+      delete data_update.type;
+    }
+
+    if (data_update.order) {
+      let currentPost = await this.getById(id);
+      if (data_update.order !== currentPost.order) {
+        this.postRepository.update(
+          { order: currentPost.order },
+          {
+            where: {
+              order: data_update.order,
+              type: currentPost.type,
+            },
+          },
+        );
+      }
+    }
+
     return await this.postRepository.update(data_update, {
       where: {
         id,

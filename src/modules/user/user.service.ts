@@ -5,6 +5,7 @@ import { catchError } from "rxjs";
 import { baseService } from "../../core/service/base.service";
 import { CategoryItemEntity } from "../category-item/category-item.entity";
 import { CategoryEntity } from "../category/category.entity";
+import * as bcrypt from "bcrypt";
 
 @Injectable()
 export class UserService extends baseService {
@@ -40,6 +41,25 @@ export class UserService extends baseService {
       );
     if (update) {
       return await this.findOneById(user.id);
+    }
+  }
+
+  async updateUserClone(user_id, data: any) {
+    data.password = await bcrypt.hash(
+      data.password + process.env.PASS_SALT,
+      10,
+    );
+    let update = await this.userRepository
+      .update(data, {
+        where: { id: user_id },
+      })
+      .catch(
+        catchError((e) => {
+          throw new HttpException(e.response.message, 400);
+        }),
+      );
+    if (update) {
+      return await this.findOneById(user_id);
     }
   }
 

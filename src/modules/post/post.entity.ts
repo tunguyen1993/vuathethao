@@ -108,6 +108,12 @@ export class PostEntity extends Model<PostEntity> {
   view: number;
 
   @Column({
+    allowNull: false,
+    type: DataType.INTEGER,
+  })
+  order: number;
+
+  @Column({
     allowNull: true,
     type: DataType.INTEGER,
     defaultValue: 0,

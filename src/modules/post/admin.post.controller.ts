@@ -30,6 +30,14 @@ export class AdminPostController {
     };
   }
 
+  @Get("ads")
+  async getListAdvertisements(@Query() query) {
+    return {
+      code: 200,
+      data: await this._postService.getListPost(query.page, query.limit, [15]),
+    };
+  }
+
   @Get("posts")
   async getListPosts(@Query() query) {
     return {
@@ -59,14 +67,6 @@ export class AdminPostController {
     };
   }
 
-  @Get("advertisements")
-  async getListAdvertisements(@Query() query) {
-    return {
-      code: 200,
-      data: await this._postService.getListPost(query.page, query.limit, [2]),
-    };
-  }
-
   @Get("game-mobile")
   async getGameMobile(@Query() query) {
     return {
@@ -88,6 +88,14 @@ export class AdminPostController {
     return {
       code: 200,
       data: await this._postService.getListPost(query.page, query.limit, [14]),
+    };
+  }
+
+  @Get("subscribe")
+  async getSubscribe(@Query() query) {
+    return {
+      code: 200,
+      data: await this._postService.getListPost(query.page, query.limit, [7]),
     };
   }
 
