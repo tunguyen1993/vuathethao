@@ -10,7 +10,8 @@ import { CategoryEntity } from "../category/category.entity";
 import { UserEntity } from "../user/user.entity";
 import { PageTypeEntity } from "../page-type/page-type.entity";
 import { PageItemEntity } from "../page-item/page-item.entity";
-import { Op } from "sequelize";
+import { col, Op } from "sequelize";
+import { Sequelize } from "sequelize-typescript";
 
 @Injectable()
 export class CategoryItemService extends baseService {
@@ -46,6 +47,21 @@ export class CategoryItemService extends baseService {
       listId.push(item.id);
     });
 
+    let orders = [];
+    if (
+      category_id === "1" ||
+      category_id === "4" ||
+      category_id === "7" ||
+      category_id === "8" ||
+      category_id === "9" ||
+      category_id === "13" ||
+      category_id === "14"
+    ) {
+      orders = [[{ model: PostEntity, as: "post" }, "createdAt", "DESC"]];
+    } else {
+      orders = [[{ model: PostEntity, as: "post" }, "order", "ASC"]];
+    }
+
     let transform = (records) => {
       return records.map((record) => {
         return record;
@@ -62,6 +78,9 @@ export class CategoryItemService extends baseService {
       include: [
         {
           model: PostEntity,
+          where: {
+            status: "ENABLE",
+          },
           include: [
             {
               model: CategoryItemEntity,
@@ -88,12 +107,12 @@ export class CategoryItemService extends baseService {
       page,
       limit,
       search,
-      [],
+      orders,
       transform,
     );
   }
 
-  async getDataByCategoryNoPagination(category_id, limit, page) {
+  async getDataByCategoryNoPagination(category_id) {
     /**
      * get list post in page_type has category same current category
      * @param records

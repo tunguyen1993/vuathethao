@@ -23,8 +23,6 @@ export class CategoryItemController {
       code: 200,
       data: await this._categoryService.getDataByCategoryNoPagination(
         category_id,
-        query.limit,
-        query.page,
       ),
     };
   }
