@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Param, Post, Query, Req } from "@nestjs/common";
 import { CategoryItemService } from "./category-item.service";
 
-@Controller("api/v1/category-item")
-export class CategoryItemController {
+@Controller("api/v1/admin/category-item")
+export class CategoryItemAdminController {
   constructor(private _categoryService: CategoryItemService) {}
 
   @Get("agency")
