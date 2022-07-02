@@ -235,7 +235,8 @@ export class PostService extends baseService {
       category_id === 1 ||
       category_id === 4 ||
       category_id === 8 ||
-      category_id === 15
+      category_id === 15 ||
+      category_id === 9
     ) {
       orders = [["id", "DESC"]];
     } else {
