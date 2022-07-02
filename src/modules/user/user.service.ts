@@ -67,6 +67,7 @@ export class UserService extends baseService {
     return this.userRepository.findOne({
       where: {
         email,
+        status: "ACTIVE",
       },
     });
   }
@@ -85,5 +86,21 @@ export class UserService extends baseService {
       [["id", "DESC"]],
       transform,
     );
+  }
+
+  async deActiveUser(user_id) {
+    let user = await this.findOneById(user_id);
+    console.log(user);
+    user.status = "DEACTIVE";
+    await user.save();
+    return await this.findOneById(user_id);
+  }
+
+  async activeUser(user_id) {
+    let user = await this.findOneById(user_id);
+    console.log(user);
+    user.status = "ACTIVE";
+    await user.save();
+    return await this.findOneById(user_id);
   }
 }

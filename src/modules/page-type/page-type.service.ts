@@ -26,6 +26,22 @@ export class PageTypeService {
           include: [
             {
               model: PostEntity,
+              attributes: [
+                "image",
+                "id",
+                "title",
+                "link",
+                "video",
+                "type",
+                "status",
+                "promotion",
+                "view",
+                "order",
+                "pricing",
+                "user_id",
+                "createdAt",
+                "updatedAt",
+              ],
               include: [
                 {
                   model: CategoryItemEntity,
@@ -61,6 +77,22 @@ export class PageTypeService {
           include: [
             {
               model: PostEntity,
+              attributes: [
+                "image",
+                "id",
+                "title",
+                "link",
+                "video",
+                "type",
+                "status",
+                "promotion",
+                "view",
+                "order",
+                "pricing",
+                "user_id",
+                "createdAt",
+                "updatedAt",
+              ],
             },
           ],
         },

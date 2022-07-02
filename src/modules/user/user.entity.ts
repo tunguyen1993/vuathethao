@@ -6,6 +6,7 @@ import {
   Model,
   Sequelize,
   Table,
+  Unique,
 } from "sequelize-typescript";
 import { CategoryEntity } from "../category/category.entity";
 import { PostEntity } from "../post/post.entity";
@@ -33,6 +34,7 @@ export class UserEntity extends Model<UserEntity> {
   })
   full_name: string;
 
+  @Unique(true)
   @Column({
     allowNull: true,
     type: DataType.STRING,
@@ -51,6 +53,12 @@ export class UserEntity extends Model<UserEntity> {
     defaultValue: "USER",
   })
   role: string;
+
+  @Column({
+    type: DataType.ENUM("ACTIVE", "DEACTIVE"),
+    defaultValue: "ACTIVE",
+  })
+  status: string;
 
   @Column({ allowNull: true })
   @Exclude()

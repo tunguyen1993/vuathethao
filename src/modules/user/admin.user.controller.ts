@@ -48,5 +48,18 @@ export class AdminUserController {
   }
 
   @Delete(":user_id")
-  async DeleteUser() {}
+  async DeleteUser(@Param("user_id") user_id: number) {
+    return {
+      code: 200,
+      data: await this._userService.deActiveUser(user_id),
+    };
+  }
+
+  @Put("active/:user_id")
+  async activeUser(@Param("user_id") user_id: number) {
+    return {
+      code: 200,
+      data: await this._userService.activeUser(user_id),
+    };
+  }
 }
