@@ -261,9 +261,7 @@ export class PostService extends baseService {
     };
 
     let transform = (records) => {
-      return records.map((record) => {
-        return record;
-      });
+      return records.map((record) => record.post);
     };
 
     return this.paginationScroll(

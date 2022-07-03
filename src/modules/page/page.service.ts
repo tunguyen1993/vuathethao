@@ -15,7 +15,12 @@ export class PageService {
       where: {
         id,
       },
-      include: [PageTypeEntity],
+      include: [
+        {
+          model: PageTypeEntity,
+          order: [["order", "ASC"]],
+        },
+      ],
     });
   }
 }
