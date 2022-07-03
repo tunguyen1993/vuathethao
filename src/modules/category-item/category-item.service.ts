@@ -43,9 +43,11 @@ export class CategoryItemService extends baseService {
     });
 
     let listId = [];
-    page_data.items.map((item) => {
-      listId.push(item.id);
-    });
+    if (page_data) {
+      page_data.items.map((item) => {
+        listId.push(item.id);
+      });
+    }
 
     let orders = [];
     if (
