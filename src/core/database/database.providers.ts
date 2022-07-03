@@ -29,7 +29,7 @@ export const databaseProviders = [
         default:
           config = databaseConfig.development;
       }
-      config.logging = true;
+      config.logging = false;
       const sequelize = new Sequelize(config);
       sequelize.addModels([
         UserEntity,

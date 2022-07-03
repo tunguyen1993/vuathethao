@@ -11,16 +11,19 @@ export class PageService {
   ) {}
 
   async getDataBlock(id: number) {
-    return await this.pageRepository.findOne({
+    let data = await this.pageRepository.findOne({
       where: {
         id,
       },
       include: [
         {
           model: PageTypeEntity,
-          order: [["order", "ASC"]],
+          as: "pageTypes",
+          order: [["order", "DESC"]],
         },
       ],
     });
+    data.pageTypes.sort((a, b) => (a.order > b.order ? 1 : -1));
+    return data;
   }
 }

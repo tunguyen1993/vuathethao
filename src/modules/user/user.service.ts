@@ -90,7 +90,7 @@ export class UserService extends baseService {
 
   async deActiveUser(user_id) {
     let user = await this.findOneById(user_id);
-    console.log(user);
+    // console.log(user);
     user.status = "DEACTIVE";
     await user.save();
     return await this.findOneById(user_id);
@@ -98,7 +98,7 @@ export class UserService extends baseService {
 
   async activeUser(user_id) {
     let user = await this.findOneById(user_id);
-    console.log(user);
+    // console.log(user);
     user.status = "ACTIVE";
     await user.save();
     return await this.findOneById(user_id);

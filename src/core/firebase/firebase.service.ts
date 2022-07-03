@@ -12,7 +12,7 @@ export class FirebaseService {
         ...message,
       },
     };
-    console.log(`${topic_id}`, payload);
+    // console.log(`${topic_id}`, payload);
 
     firebase
       .messaging()

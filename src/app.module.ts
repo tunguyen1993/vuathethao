@@ -64,10 +64,10 @@ import { FirebaseService } from "./core/firebase/firebase.service";
       provide: APP_INTERCEPTOR,
       useClass: HttpInterceptor,
     },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: LoggingInterceptor,
-    },
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: LoggingInterceptor,
+    // },
   ],
 })
 export class AppModule implements NestModule {

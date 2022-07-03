@@ -16,7 +16,7 @@ export class PageItemService {
         page_type_id,
       },
     });
-    console.log(data);
+    // console.log(data);
     return this.pageItemRepository.bulkCreate(data);
   }
 }
