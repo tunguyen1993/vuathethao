@@ -12,11 +12,10 @@ export class FirebaseService {
         ...message,
       },
     };
-    // console.log(`${topic_id}`, payload);
 
     firebase
       .messaging()
-      .sendToTopic(`${process.env.TOPIC_FIREBASE}_${topic_id}`, payload)
+      .sendToTopic(`${topic_id}`, payload)
       .then((res) => {
         console.log(res);
       })
