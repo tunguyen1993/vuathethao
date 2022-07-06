@@ -165,7 +165,10 @@ export class PostEntity extends Model<PostEntity> {
     if (instances.type === "NOTIFY") {
       noti.pushTopicNotify("notifyApp", {
         title: instances.title,
-        body: instances.image,
+        body: JSON.stringify({
+          id: instances.id,
+          image: instances.image,
+        }),
       });
     }
   }
