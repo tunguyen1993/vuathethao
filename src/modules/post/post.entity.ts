@@ -164,8 +164,8 @@ export class PostEntity extends Model<PostEntity> {
     let noti = new FirebaseService();
     if (instances.type === "NOTIFY") {
       noti.pushTopicNotify("notifyApp", {
-        title: "Có 1 tin nhắn mới " + instances.title,
-        body: instances.title,
+        title: instances.title,
+        body: instances.image,
       });
     }
   }
