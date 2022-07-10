@@ -1,6 +1,8 @@
 import { Inject, Injectable } from "@nestjs/common";
 import {
+  CATEGORY_ITEM_FAKE_REPOSITORY,
   CATEGORY_ITEM_REPOSITORY,
+  POST_FAKE_REPOSITORY,
   POST_REPOSITORY,
 } from "../../core/constants";
 import { PostEntity } from "./post.entity";
@@ -11,6 +13,11 @@ import { UserEntity } from "../user/user.entity";
 import { Op } from "sequelize";
 import { PageTypeEntity } from "../page-type/page-type.entity";
 import { PageItemEntity } from "../page-item/page-item.entity";
+import { PostFakeEntity } from "./post-fake.entity";
+import { CategoryItemFakeEntity } from "../category-item/category-item-fake.entity";
+import { CategoryFakeEntity } from "../category/category-fake.entity";
+import { PageTypeFakeEntity } from "../page-type/page-type-fake.entity";
+import { PageItemFakeEntity } from "../page-item/page-item-fake.entity";
 
 @Injectable()
 export class PostService extends baseService {
@@ -19,11 +26,15 @@ export class PostService extends baseService {
     private readonly postRepository: typeof PostEntity,
     @Inject(CATEGORY_ITEM_REPOSITORY)
     private readonly categoryItemRepository: typeof CategoryItemEntity,
+    @Inject(POST_FAKE_REPOSITORY)
+    private readonly postFakeRepository: typeof PostFakeEntity,
+    @Inject(CATEGORY_ITEM_FAKE_REPOSITORY)
+    private readonly categoryItemFakeRepository: typeof CategoryItemFakeEntity,
   ) {
     super(postRepository);
   }
 
-  async getListByType(type) {
+  async getListByType(type, modelFake: boolean = false) {
     return this.postRepository.findAll({
       where: {
         type,
@@ -55,6 +66,7 @@ export class PostService extends baseService {
     categorySelect,
     filter_search: any = undefined,
     sort,
+    modelFake: boolean = false,
   ) {
     let transform = (records) => {
       return records.map((record) => {
@@ -107,7 +119,7 @@ export class PostService extends baseService {
     );
   }
 
-  async createPost(post_data) {
+  async createPost(post_data, modelFake: boolean = false) {
     let find_order = await this.postRepository.findOne({
       where: { type: post_data.type },
       order: [["order", "DESC"]],
@@ -144,7 +156,7 @@ export class PostService extends baseService {
     return post;
   }
 
-  async deletePost(id: number) {
+  async deletePost(id: number, modelFake: boolean = false) {
     return await this.postRepository.destroy({
       where: {
         id,
@@ -152,7 +164,30 @@ export class PostService extends baseService {
     });
   }
 
-  async getById(id: number) {
+  async getById(id: number, modelFake: boolean = false) {
+    if (modelFake) {
+      return await this.postFakeRepository.findOne({
+        where: {
+          id,
+        },
+        include: [
+          {
+            model: CategoryItemFakeEntity,
+            attributes: ["category_id"],
+            include: [
+              {
+                model: CategoryFakeEntity,
+                attributes: ["name"],
+              },
+            ],
+          },
+          {
+            model: UserEntity,
+            attributes: ["full_name", "email"],
+          },
+        ],
+      });
+    }
     return await this.postRepository.findOne({
       where: {
         id,
@@ -176,7 +211,7 @@ export class PostService extends baseService {
     });
   }
 
-  async updatePost(id: number, data_update: any) {
+  async updatePost(id: number, data_update: any, modelFake: boolean = false) {
     if (data_update.type) {
       await this.categoryItemRepository.update(
         {
@@ -213,7 +248,72 @@ export class PostService extends baseService {
     });
   }
 
-  async getByCategory(category_id: number, page, limit) {
+  async getByCategory(
+    category_id: number,
+    page,
+    limit,
+    modelFake: boolean = false,
+  ) {
+    if (modelFake) {
+      let page_data = await PageTypeFakeEntity.findOne({
+        where: {
+          type: "CATEGORY",
+          category_id: category_id,
+        },
+        include: [
+          {
+            model: PageItemFakeEntity,
+            attributes: ["id"],
+          },
+        ],
+      });
+      let listId = [];
+      page_data.items.map((item) => {
+        listId.push(item.id);
+      });
+      let orders: any;
+      if (
+        category_id === 1 ||
+        category_id === 4 ||
+        category_id === 8 ||
+        category_id === 15 ||
+        category_id === 9
+      ) {
+        orders = [["id", "DESC"]];
+      } else {
+        orders = [["order", "ASC"]];
+      }
+
+      let search = {
+        order: orders,
+        where: {
+          status: "ENABLE",
+        },
+        include: [
+          {
+            model: CategoryItemFakeEntity,
+            where: {
+              category_id,
+            },
+            required: true,
+          },
+        ],
+        subQuery: false,
+      };
+
+      let transform = (records) => {
+        return records.map((record) => record.post);
+      };
+
+      return this.paginationScroll(
+        this.postFakeRepository,
+        page,
+        limit,
+        search,
+        [],
+        transform,
+      );
+    }
     let page_data = await PageTypeEntity.findOne({
       where: {
         type: "CATEGORY",

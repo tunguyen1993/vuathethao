@@ -10,6 +10,12 @@ import { CategoryItemEntity } from "../../modules/category-item/category-item.en
 import { UserEntity } from "../../modules/user/user.entity";
 import { ConfigEntity } from "../../modules/config/config.entity";
 import { NotifyEntity } from "../../modules/notify/notify.entity";
+import { PostFakeEntity } from "../../modules/post/post-fake.entity";
+import { PageFakeEntity } from "../../modules/page/page-fake.entity";
+import { CategoryFakeEntity } from "../../modules/category/category-fake.entity";
+import { PageTypeFakeEntity } from "../../modules/page-type/page-type-fake.entity";
+import { PageItemFakeEntity } from "../../modules/page-item/page-item-fake.entity";
+import { CategoryItemFakeEntity } from "../../modules/category-item/category-item-fake.entity";
 
 export const databaseProviders = [
   {
@@ -35,11 +41,17 @@ export const databaseProviders = [
         UserEntity,
         NotifyEntity,
         PostEntity,
+        PostFakeEntity,
         PageEntity,
+        PageFakeEntity,
         CategoryEntity,
+        CategoryFakeEntity,
         PageTypeEntity,
+        PageTypeFakeEntity,
         PageItemEntity,
+        PageItemFakeEntity,
         CategoryItemEntity,
+        CategoryItemFakeEntity,
         ConfigEntity,
       ]);
       await sequelize.sync();
