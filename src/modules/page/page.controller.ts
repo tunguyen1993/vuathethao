@@ -1,27 +1,26 @@
 import {
   Controller,
-  Delete,
   Get,
   HttpException,
   HttpStatus,
   Param,
-  Post,
+  Query,
   Req,
-  Res,
-  UploadedFiles,
-  UseGuards,
-  UseInterceptors,
 } from "@nestjs/common";
 import { PageService } from "./page.service";
-import { Request, Response } from "express";
+import { Request } from "express";
 
 @Controller("api/v1/page")
 export class PageController {
   constructor(private readonly _pageService: PageService) {}
 
   @Get(":id")
-  async getHomePage(@Req() request: Request, @Param("id") id: number) {
-    let data = await this._pageService.getDataBlock(id);
+  async getHomePage(
+    @Req() request: Request,
+    @Param("id") id: number,
+    @Query("fake") fake: string,
+  ) {
+    let data = await this._pageService.getDataBlock(id, !!fake);
     if (!data) {
       throw new HttpException("Page Not Found", HttpStatus.NOT_FOUND);
     }

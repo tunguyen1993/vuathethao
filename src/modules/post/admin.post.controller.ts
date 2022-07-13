@@ -23,10 +23,10 @@ export class AdminPostController {
   constructor(private _postService: PostService) {}
 
   @Get()
-  async getPosts(@Query("type") type: string) {
+  async getPosts(@Query() query: any) {
     return {
       code: 200,
-      data: await this._postService.getListByType(type),
+      data: await this._postService.getListByType(query.type, !!query.fake),
     };
   }
 
@@ -40,6 +40,7 @@ export class AdminPostController {
         [15],
         undefined,
         [query.sort_by, query.order_by],
+        !!query.fake,
       ),
     };
   }
@@ -54,6 +55,7 @@ export class AdminPostController {
         [13, 1, 8, 4],
         query,
         [query.sort_by, query.order_by],
+        !!query.fake,
       ),
     };
   }
@@ -68,6 +70,7 @@ export class AdminPostController {
         [3],
         undefined,
         [query.sort_by, query.order_by],
+        !!query.fake,
       ),
     };
   }
@@ -82,6 +85,7 @@ export class AdminPostController {
         [2],
         undefined,
         [query.sort_by, query.order_by],
+        !!query.fake,
       ),
     };
   }
@@ -96,6 +100,7 @@ export class AdminPostController {
         [6],
         undefined,
         [query.sort_by, query.order_by],
+        !!query.fake,
       ),
     };
   }
@@ -110,6 +115,7 @@ export class AdminPostController {
         [5],
         undefined,
         [query.sort_by, query.order_by],
+        !!query.fake,
       ),
     };
   }
@@ -124,6 +130,7 @@ export class AdminPostController {
         [14],
         undefined,
         [query.sort_by, query.order_by],
+        !!query.fake,
       ),
     };
   }
@@ -138,6 +145,7 @@ export class AdminPostController {
         [7],
         undefined,
         [query.sort_by, query.order_by],
+        !!query.fake,
       ),
     };
   }
@@ -152,86 +160,90 @@ export class AdminPostController {
         [9],
         undefined,
         [query.sort_by, query.order_by],
+        !!query.fake,
       ),
     };
   }
 
   @Post("create-post")
-  async createPost(@Body() body: any, @Req() request: Request) {
+  async createPost(@Body() body: any, @Req() request: Request, @Query() query) {
     return {
       code: 200,
-      data: await this._postService.createPost({
-        ...body,
-        user_id: request.user["id"],
-      }),
+      data: await this._postService.createPost(
+        {
+          ...body,
+          user_id: request.user["id"],
+        },
+        !!query.fake,
+      ),
     };
   }
 
   @Post("create-video")
-  async createVideo(@Body() body: any) {
+  async createVideo(@Body() body: any, @Query() query) {
     return {
       code: 200,
-      data: await this._postService.createPost(body),
+      data: await this._postService.createPost(body, !!query.fake),
     };
   }
 
   @Post("create-game-card")
-  async createGameCard(@Body() body: any) {
+  async createGameCard(@Body() body: any, @Query() query) {
     return {
       code: 200,
-      data: await this._postService.createPost(body),
+      data: await this._postService.createPost(body, !!query.fake),
     };
   }
 
   @Post("create-game-mobile")
-  async createGameMobile(@Body() body: any) {
+  async createGameMobile(@Body() body: any, @Query() query) {
     return {
       code: 200,
-      data: await this._postService.createPost(body),
+      data: await this._postService.createPost(body, !!query.fake),
     };
   }
 
   @Post("create-advertisement")
-  async createAdvertisement(@Body() body: any) {
+  async createAdvertisement(@Body() body: any, @Query() query) {
     return {
       code: 200,
-      data: await this._postService.createPost(body),
+      data: await this._postService.createPost(body, !!query.fake),
     };
   }
 
   @Post("create-agency")
-  async createAgency(@Body() body: any) {
+  async createAgency(@Body() body: any, @Query() query) {
     return {
       code: 200,
-      data: await this._postService.createPost(body),
+      data: await this._postService.createPost(body, !!query.fake),
     };
   }
 
   @Post("create-deal")
-  async createDeal(@Body() body: any) {
+  async createDeal(@Body() body: any, @Query() query) {
     return {
       code: 200,
-      data: await this._postService.createPost(body),
+      data: await this._postService.createPost(body, !!query.fake),
     };
   }
 
   @Delete(":id")
-  async deletePostId(@Param("id") id: number) {
+  async deletePostId(@Param("id") id: number, @Query() query) {
     return {
       code: 200,
-      data: await this._postService.deletePost(id),
+      data: await this._postService.deletePost(id, !!query.fake),
     };
   }
 
   @Put(":id")
-  async updatePost(@Param("id") id: number, @Body() body: any) {
-    let post = await this._postService.getById(id);
+  async updatePost(@Param("id") id: number, @Body() body: any, @Query() query) {
+    let post = await this._postService.getById(id, !!query.fake);
     if (!post) {
       throw new HttpException("Post Found", HttpStatus.NOT_FOUND);
     }
     return {
       code: 200,
-      data: await this._postService.updatePost(id, body),
+      data: await this._postService.updatePost(id, body, !!query.fake),
     };
   }
 }

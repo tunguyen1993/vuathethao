@@ -124,6 +124,7 @@ export class CategoryItemService extends baseService {
         transform,
       );
     }
+
     /**
      * get list post in page_type has category same current category
      * @param records

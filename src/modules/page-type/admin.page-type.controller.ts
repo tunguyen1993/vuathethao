@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Put,
+  Query,
   Req,
   UseGuards,
 } from "@nestjs/common";
@@ -20,10 +21,11 @@ export class AdminPageTypeController {
   async getHomePage(
     @Req() request: Request,
     @Param("page_id") page_id: number,
+    @Query() query: any,
   ) {
     return {
       code: 200,
-      data: await this._pageTypeService.getListByTypeId(page_id),
+      data: await this._pageTypeService.getListByTypeId(page_id, !!query.fake),
     };
   }
 
@@ -32,10 +34,15 @@ export class AdminPageTypeController {
     @Req() request: Request,
     @Param("page_id") page_id: number,
     @Body("category_id") category_id: number,
+    @Query() query: any,
   ) {
     return {
       code: 200,
-      data: await this._pageTypeService.updateCategoryId(page_id, category_id),
+      data: await this._pageTypeService.updateCategoryId(
+        page_id,
+        category_id,
+        !!query.fake,
+      ),
     };
   }
 }

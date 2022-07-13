@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Post, Query, Req, UseGuards } from "@nestjs/common";
 import { Request, Response } from "express";
 import { PageItemService } from "./page-item.service";
 import { JwtAuthGuard } from "../../core/guards/jwtAuth.guard";
@@ -9,13 +9,14 @@ export class AdminPageItemController {
   constructor(private _pageItemService: PageItemService) {}
 
   @Post()
-  async createPost(@Req() request: Request, @Body() body) {
+  async createPost(@Req() request: Request, @Body() body, @Query() query: any) {
     return {
       code: 200,
       data: await this._pageItemService.createData(
         body.page_id,
         body.page_type_id,
         body.data,
+        !!query.fake,
       ),
     };
   }

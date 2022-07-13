@@ -1,25 +1,17 @@
 import {
   Controller,
-  Injectable,
+  HttpCode,
   Post,
-  Req,
-  Res,
+  UploadedFile,
   UploadedFiles,
   UseInterceptors,
 } from "@nestjs/common";
-import { FilesInterceptor } from "@nestjs/platform-express";
-import {
-  imageFileFilter,
-  videoFileFilter,
-} from "../../core/file-filters/file-upload.filters";
+import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
+import { imageFileFilter } from "../../core/file-filters/file-upload.filters";
 import { SharpPipeImage, SharpPipeVideo } from "../../core/pipes/sharp.pipe";
-
-import { FileInterceptor } from "@nestjs/platform-express";
-import { mixin, NestInterceptor, Type } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { MulterOptions } from "@nestjs/platform-express/multer/interfaces/multer-options.interface";
+import { ApiBody, ApiConsumes } from "@nestjs/swagger";
 import { diskStorage } from "multer";
-import * as fs from "fs";
+import { v4 } from "uuid";
 
 @Controller("api/v1/upload-file")
 export class UploadFileController {
@@ -40,13 +32,24 @@ export class UploadFileController {
     };
   }
 
-  @Post("upload-single-video")
-  @UseInterceptors(FilesInterceptor("image", 1))
-  uploadSingleVideo(@UploadedFiles(SharpPipeVideo) file) {
+  @Post("upload-video")
+  @HttpCode(200)
+  @UseInterceptors(
+    FileInterceptor("image", {
+      storage: diskStorage({
+        destination: "./assets/videos",
+        filename: (req, file, cb) => {
+          return cb(null, `${v4().replace(/-/g, "")}.mp4`);
+        },
+      }),
+    }),
+  ) // 👈 field name must match
+  @ApiConsumes("multipart/form-data")
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
     return {
       statusCode: 200,
       timestamp: new Date().toISOString(),
-      data: file,
+      data: file.filename,
       message: "success",
     };
   }

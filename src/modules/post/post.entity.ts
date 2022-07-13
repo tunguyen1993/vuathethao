@@ -61,7 +61,18 @@ export class PostEntity extends Model<PostEntity> {
     allowNull: true,
     type: DataType.STRING(500),
   })
-  video: string;
+  get video(): string | undefined {
+    let video = this.getDataValue("video");
+    if (!video) {
+      return undefined;
+    }
+    if (video.search(/facebook/i) !== -1 && video.search(/youtu/i) !== -1) {
+      return (
+        process.env.BASE_URL + "/files/videos/" + this.getDataValue("video")
+      );
+    }
+    return this.getDataValue("video");
+  }
 
   @Column({
     allowNull: true,
@@ -112,6 +123,24 @@ export class PostEntity extends Model<PostEntity> {
     type: DataType.INTEGER,
   })
   order: number;
+
+  @Column({
+    allowNull: false,
+    type: DataType.VIRTUAL,
+  })
+  get video_type(): string | undefined {
+    let video = this.getDataValue("video");
+    if (!video) {
+      return undefined;
+    }
+    if (video.search(/facebook/i) !== -1) {
+      return "facebook";
+    } else if (video.search(/youtu/i) !== -1) {
+      return "youtube";
+    } else {
+      return "upload";
+    }
+  }
 
   @Column({
     allowNull: true,
