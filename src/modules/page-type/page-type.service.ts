@@ -101,6 +101,7 @@ export class PageTypeService {
                 "user_id",
                 "createdAt",
                 "updatedAt",
+                "video_type",
               ],
               include: [
                 {
