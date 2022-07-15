@@ -68,7 +68,11 @@ export class PostFakeEntity extends Model<PostFakeEntity> {
     if (!video) {
       return undefined;
     }
-    if (video.search(/facebook/i) !== -1 && video.search(/youtu/i) !== -1) {
+    if (
+      video.search(/facebook/i) !== -1 &&
+      video.search(/youtu/i) !== -1 &&
+      video.search(/fb.watch/i) !== -1
+    ) {
       return (
         process.env.BASE_URL + "/files/videos/" + this.getDataValue("video")
       );
@@ -167,7 +171,9 @@ export class PostFakeEntity extends Model<PostFakeEntity> {
     if (!video) {
       return undefined;
     }
-    if (video.search(/facebook/i) !== -1) {
+    if (video.search(/fb.watch/i) !== -1) {
+      return "facebook";
+    } else if (video.search(/facebook/i) !== -1) {
       return "facebook";
     } else if (video.search(/youtu/i) !== -1) {
       return "youtube";
