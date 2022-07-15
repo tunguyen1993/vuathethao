@@ -69,7 +69,7 @@ export class PostEntity extends Model<PostEntity> {
     if (
       video.search(/facebook/i) === -1 &&
       video.search(/youtu/i) === -1 &&
-      video.search(/fb.watch/i) !== -1
+      video.search(/fb.watch/i) === -1
     ) {
       return (
         process.env.BASE_URL + "/files/videos/" + this.getDataValue("video")
