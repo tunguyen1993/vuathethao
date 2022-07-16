@@ -6,8 +6,8 @@ import path from "path";
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  root(@Res() res): void {
-    res.sendFile("index.html", { root: __dirname + "/../frontend" });
+  @Get("privacy")
+  privacy(@Res() res): void {
+    res.sendFile("privacy.html", { root: __dirname + "/../frontend" });
   }
 }
