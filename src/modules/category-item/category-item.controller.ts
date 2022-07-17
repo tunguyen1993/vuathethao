@@ -30,6 +30,7 @@ export class CategoryItemController {
     @Param("category_id") category_id,
     @RealIP() ip: string,
   ) {
+    console.log(ip);
     let filterModel = await this._filterIpService.filterIp(ip);
     console.log(filterModel);
     return {
