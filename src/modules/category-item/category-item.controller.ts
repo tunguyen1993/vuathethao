@@ -32,7 +32,7 @@ export class CategoryItemController {
   ) {
     console.log(ip);
     let filterModel = await this._filterIpService.filterIp(ip);
-    console.log(filterModel);
+    console.log(filterModel, "++++++++++++++++++++");
     return {
       code: 200,
       data: await this._categoryService.getDataByCategory(
