@@ -47,7 +47,6 @@ export class CategoryItemService extends baseService {
     };
 
     if (modelFake) {
-      console.log("GET FAKE");
       let page_data = await this.pageTypeFakeRepository.findOne({
         where: {
           type: "CATEGORY",
@@ -78,9 +77,9 @@ export class CategoryItemService extends baseService {
         category_id === "14" ||
         category_id === "6"
       ) {
-        orders = [[{ model: PostEntity, as: "post" }, "createdAt", "DESC"]];
+        orders = [[{ model: PostFakeEntity, as: "post" }, "createdAt", "DESC"]];
       } else {
-        orders = [[{ model: PostEntity, as: "post" }, "order", "ASC"]];
+        orders = [[{ model: PostFakeEntity, as: "post" }, "order", "ASC"]];
       }
 
       let search = {
@@ -92,17 +91,17 @@ export class CategoryItemService extends baseService {
         },
         include: [
           {
-            model: PostEntity,
+            model: PostFakeEntity,
             where: {
               status: "ENABLE",
             },
             include: [
               {
-                model: CategoryItemEntity,
+                model: CategoryItemFakeEntity,
                 attributes: ["category_id"],
                 include: [
                   {
-                    model: CategoryEntity,
+                    model: CategoryFakeEntity,
                     attributes: ["name"],
                   },
                 ],
@@ -126,8 +125,6 @@ export class CategoryItemService extends baseService {
         transform,
       );
     }
-
-    console.log("GET REAL");
 
     /**
      * get list post in page_type has category same current category
@@ -163,9 +160,9 @@ export class CategoryItemService extends baseService {
       category_id === "13" ||
       category_id === "14"
     ) {
-      orders = [[{ model: PostFakeEntity, as: "post" }, "createdAt", "DESC"]];
+      orders = [[{ model: PostEntity, as: "post" }, "createdAt", "DESC"]];
     } else {
-      orders = [[{ model: PostFakeEntity, as: "post" }, "order", "ASC"]];
+      orders = [[{ model: PostEntity, as: "post" }, "order", "ASC"]];
     }
 
     let search = {
@@ -177,17 +174,17 @@ export class CategoryItemService extends baseService {
       },
       include: [
         {
-          model: PostFakeEntity,
+          model: PostEntity,
           where: {
             status: "ENABLE",
           },
           include: [
             {
-              model: CategoryItemFakeEntity,
+              model: CategoryItemEntity,
               attributes: ["category_id"],
               include: [
                 {
-                  model: CategoryFakeEntity,
+                  model: CategoryEntity,
                   attributes: ["name"],
                 },
               ],
@@ -230,7 +227,7 @@ export class CategoryItemService extends baseService {
       page_data.items.map((item) => {
         listId.push(item.id);
       });
-      return this.categoryItemFakeRepository.findAll({
+      return this.categoryItemRepository.findAll({
         where: {
           category_id,
           post_id: {
@@ -239,7 +236,7 @@ export class CategoryItemService extends baseService {
         },
         include: [
           {
-            model: PostFakeEntity,
+            model: PostEntity,
             where: {
               status: "ENABLE",
             },

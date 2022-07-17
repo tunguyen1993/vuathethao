@@ -12,10 +12,10 @@ export class FilterIpService {
 
   public async filterIp(ip: string): Promise<any> {
     let fake_data = await this.cacheManager.get("FAKE_DATA");
-    // let storageIp = await this.cacheManager.get(ip.toString());
-    // if (storageIp === true && fake_data === true) {
-    //   return true;
-    // }
+    let storageIp = await this.cacheManager.get(ip.toString());
+    if (storageIp === true && fake_data === true) {
+      return true;
+    }
     return this.httpService
       .get(
         `https://api.ipstack.com/${ip}?access_key=${process.env.ACCESS_TOKEN_API_FILTER_IP}`,
