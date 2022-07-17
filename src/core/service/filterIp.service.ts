@@ -31,6 +31,7 @@ export class FilterIpService {
               },
             )
             .then((res) => console.log("SAVE TO REDIS " + res));
+          console.log(item.data.country_code);
           return (
             item.data &&
             item.data.country_code &&
