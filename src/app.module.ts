@@ -63,6 +63,7 @@ import type { ClientOpts } from "redis";
       host: "localhost",
       port: 6379,
       isGlobal: true,
+      ttl: 1,
     }),
   ],
   controllers: [AppController],
