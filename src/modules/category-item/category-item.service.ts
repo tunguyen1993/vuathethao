@@ -117,7 +117,7 @@ export class CategoryItemService extends baseService {
       };
 
       return this.paginationScroll(
-        this.categoryItemRepository,
+        this.categoryItemFakeRepository,
         page,
         limit,
         search,
@@ -200,7 +200,7 @@ export class CategoryItemService extends baseService {
     };
 
     return this.paginationScroll(
-      this.categoryItemFakeRepository,
+      this.categoryItemRepository,
       page,
       limit,
       search,
