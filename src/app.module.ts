@@ -32,6 +32,7 @@ import { FrontendMiddleware } from "./core/middleware/frontend.middleware";
 import { FirebaseService } from "./core/firebase/firebase.service";
 import * as redisStore from "cache-manager-redis-store";
 import type { ClientOpts } from "redis";
+import { LoggingInterceptor } from "@algoan/nestjs-logging-interceptor";
 
 @Module({
   imports: [
@@ -78,10 +79,10 @@ import type { ClientOpts } from "redis";
       provide: APP_INTERCEPTOR,
       useClass: CacheInterceptor,
     },
-    // {
-    //   provide: APP_INTERCEPTOR,
-    //   useClass: LoggingInterceptor,
-    // },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
   ],
 })
 export class AppModule implements NestModule {

@@ -27,7 +27,7 @@ export class FrontendMiddleware implements NestMiddleware {
       next();
     } else if (allowedExt.filter((ext) => url.indexOf(ext) > 0).length > 0) {
       // it has a file extension --> resolve the file
-      console.log("here be the other files: " + resolvePath(url));
+      // console.log("here be the other files: " + resolvePath(url));
       res.sendFile(resolvePath(url));
     } else {
       // in all other cases, redirect to the index.html!
