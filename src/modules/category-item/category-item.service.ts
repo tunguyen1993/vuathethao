@@ -47,6 +47,7 @@ export class CategoryItemService extends baseService {
     };
 
     if (modelFake) {
+      console.log("GET FAKE");
       let page_data = await this.pageTypeFakeRepository.findOne({
         where: {
           type: "CATEGORY",
@@ -125,6 +126,8 @@ export class CategoryItemService extends baseService {
         transform,
       );
     }
+
+    console.log("GET REAL");
 
     /**
      * get list post in page_type has category same current category

@@ -31,7 +31,7 @@ export class CategoryItemController {
     @RealIP() ip: string,
   ) {
     console.log(ip);
-    let filterModel = await this._filterIpService.filterIp(ip);
+    let filterModel = await this._filterIpService.filterIp("14.162.208.111");
     console.log(filterModel, "++++++++++++++++++++");
     return {
       code: 200,
