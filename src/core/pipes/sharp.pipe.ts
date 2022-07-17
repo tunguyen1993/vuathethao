@@ -29,7 +29,7 @@ export class SharpPipeVideo
 {
   async transform(videos: any): Promise<any> {
     console.log("========================");
-    console.log(videos);
+    // console.log(videos);
     let files = [];
     if (videos) {
       videos.map(async (video) => {
@@ -40,7 +40,7 @@ export class SharpPipeVideo
         );
       });
     }
-    console.log(files);
+    // console.log(files);
 
     return files;
   }

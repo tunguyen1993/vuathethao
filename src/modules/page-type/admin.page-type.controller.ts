@@ -1,5 +1,6 @@
 import {
   Body,
+  CacheTTL,
   Controller,
   Get,
   Param,
@@ -18,6 +19,7 @@ export class AdminPageTypeController {
   constructor(private readonly _pageTypeService: PageTypeService) {}
 
   @Get(":page_id")
+  @CacheTTL(1)
   async getHomePage(
     @Req() request: Request,
     @Param("page_id") page_id: number,
@@ -30,6 +32,7 @@ export class AdminPageTypeController {
   }
 
   @Put(":page_id")
+  @CacheTTL(1)
   async updateData(
     @Req() request: Request,
     @Param("page_id") page_id: number,

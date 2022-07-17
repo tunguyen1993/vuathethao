@@ -74,7 +74,8 @@ export class CategoryItemService extends baseService {
         category_id === "8" ||
         category_id === "9" ||
         category_id === "13" ||
-        category_id === "14"
+        category_id === "14" ||
+        category_id === "6"
       ) {
         orders = [[{ model: PostEntity, as: "post" }, "createdAt", "DESC"]];
       } else {

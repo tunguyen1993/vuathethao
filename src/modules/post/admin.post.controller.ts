@@ -1,5 +1,6 @@
 import {
   Body,
+  CacheTTL,
   Controller,
   Delete,
   Get,
@@ -31,6 +32,7 @@ export class AdminPostController {
   }
 
   @Get("ads")
+  @CacheTTL(1)
   async getListAdvertisements(@Query() query) {
     return {
       code: 200,
@@ -46,6 +48,7 @@ export class AdminPostController {
   }
 
   @Get("posts")
+  @CacheTTL(1)
   async getListPosts(@Query() query) {
     return {
       code: 200,
@@ -61,6 +64,7 @@ export class AdminPostController {
   }
 
   @Get("deals")
+  @CacheTTL(1)
   async getListDeals(@Query() query) {
     return {
       code: 200,
@@ -76,6 +80,7 @@ export class AdminPostController {
   }
 
   @Get("game-card")
+  @CacheTTL(1)
   async getListGameCard(@Query() query) {
     return {
       code: 200,
@@ -91,6 +96,7 @@ export class AdminPostController {
   }
 
   @Get("game-mobile")
+  @CacheTTL(1)
   async getGameMobile(@Query() query) {
     return {
       code: 200,
@@ -106,6 +112,7 @@ export class AdminPostController {
   }
 
   @Get("agency")
+  @CacheTTL(1)
   async getAgency(@Query() query) {
     return {
       code: 200,
@@ -121,6 +128,7 @@ export class AdminPostController {
   }
 
   @Get("notify")
+  @CacheTTL(1)
   async getNotify(@Query() query) {
     return {
       code: 200,
@@ -136,6 +144,7 @@ export class AdminPostController {
   }
 
   @Get("subscribe")
+  @CacheTTL(1)
   async getSubscribe(@Query() query) {
     return {
       code: 200,
@@ -151,6 +160,7 @@ export class AdminPostController {
   }
 
   @Get("livestream")
+  @CacheTTL(1)
   async livestream(@Query() query) {
     return {
       code: 200,
