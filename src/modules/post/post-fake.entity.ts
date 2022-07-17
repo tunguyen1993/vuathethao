@@ -163,7 +163,7 @@ export class PostFakeEntity extends Model<PostFakeEntity> {
   user_created: UserEntity;
 
   @Column({
-    allowNull: false,
+    allowNull: true,
     type: DataType.VIRTUAL,
   })
   get video_type(): string | undefined {

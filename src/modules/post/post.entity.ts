@@ -129,7 +129,7 @@ export class PostEntity extends Model<PostEntity> {
   order: number;
 
   @Column({
-    allowNull: false,
+    allowNull: true,
     type: DataType.VIRTUAL,
   })
   get video_type(): string | undefined {
